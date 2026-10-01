@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">ChefMarket</string>
+    <string name="chef_recommendations">הצעות שף</string>
+    <string name="meal_builder">בניית מנה</string>
+    <string name="grocery_cart">סל קניות</string>
+    <string name="profile_and_saved">פרופיל ושמורים</string>
+    <string name="smart_culinary_match">התאמה קולינרית חכמה בזמן אמת</string>
+    <string name="chef_tip_week">טיפ שף השבוע</string>
+    <string name="chef_yaron">שף ירון ברנר</string>
+    <string name="search_hint">חיפוש מנה, מצרך או סגנון בישול...</string>
+    <string name="best_value">הכי משתלם</string>
+    <string name="fast_prep">מהיר (עד 25 דק׳)</string>
+    <string name="gourmet">יוקרתי</string>
+    <string name="healthy">בריא וקל</string>
+    <string name="budget_exact_match">במחיר סופרמרקט מדויק לתקציב של</string>
+    <string name="add_to_cart">העבר מצרכים לסל</string>
+    <string name="start_cooking">התחל בישול מודרך</string>
+    <string name="smart_timer">טיימר בישול חכם</string>
+</resources>

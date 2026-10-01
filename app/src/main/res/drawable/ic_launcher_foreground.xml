@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Chef Hat Base -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,26 C44,26 40,34 40,40 C35,41 32,46 33,52 C34,58 38,62 43,62 L43,74 C43,76 45,78 47,78 L61,78 C63,78 65,76 65,74 L65,62 C70,62 74,58 75,52 C76,46 73,41 68,40 C68,34 64,26 54,26 Z" />
+    <!-- Hat band ribbon -->
+    <path
+        android:fillColor="#F6FBF5"
+        android:pathData="M45,71 L63,71 L63,74 L45,74 Z" />
+    <!-- Herb leaf accent in sage green -->
+    <path
+        android:fillColor="#B6EDC2"
+        android:pathData="M64,30 C69,27 75,28 77,32 C77,36 72,39 67,37 Z" />
+</vector>

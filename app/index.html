@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+  <title>ChefMarket - אפליקציית שף פרטי</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#a83211",
+            "primary-container": "#ca4a28",
+            "on-primary": "#ffffff",
+            secondary: "#376847",
+            "secondary-container": "#b6edc2",
+            "on-secondary-container": "#1e5031",
+            tertiary: "#805200",
+            surface: "#f6fbf5",
+            "surface-container": "#ebefea",
+            "surface-container-low": "#f0f5f0",
+            "surface-container-lowest": "#ffffff",
+            "on-surface": "#181d1a",
+            "on-surface-variant": "#59413b"
+          },
+          fontFamily: {
+            sans: ["Rubik", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { direction: rtl; font-family: 'Rubik', sans-serif; -webkit-tap-highlight-color: transparent; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen pb-24">
+
+  <!-- Top App Bar -->
+  <header class="sticky top-0 w-full z-40 bg-surface/90 backdrop-blur-xl border-b border-surface-container">
+    <div class="h-16 px-4 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center">
+          <span class="material-symbols-outlined text-primary text-[24px]">restaurant_menu</span>
+        </div>
+        <div class="flex flex-col text-right">
+          <span class="font-bold text-lg text-on-surface leading-none">ChefMarket</span>
+          <span class="text-xs text-on-surface-variant font-medium mt-0.5">אפליקציית שף פרטי</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="/download-apk" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary-container text-on-secondary-container text-xs font-bold shadow-sm hover:opacity-90 transition-opacity">
+          <span class="material-symbols-outlined text-[16px]">android</span>
+          <span>הורד APK</span>
+        </a>
+        <button onclick="switchTab('profile')" class="w-9 h-9 rounded-full overflow-hidden ring-2 ring-primary/20">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeNnGVr49kquwTDa7317xCAC4jhnrJ92gfcAj1qKqfzC1GOn9mVJAdmbesjxz0Q7Mkg42GNm7Ni0lY-zrE15BM30d2XXpxb-xFTJ7Zotib2FYkmZDSZvaiWWTg459RW39GKwPqzPV4ce0uBOcQ1zd-INoReIRT_Cd5oFSFefRf-pNlcdCwgL6_7703cj_w10EQWLFLD0v1rkZgTutG_o2ZVV-clfxK05dZWNVEwdHT5vv-E_S8KdSNyw" class="w-full h-full object-cover" alt="שף ירון"/>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TAB 1: Chef Recommendations (Home) -->
+  <main id="tab-recommendations" class="tab-content flex-1 max-w-xl mx-auto w-full px-4 pt-4">
+    <!-- Real-time match banner -->
+    <div class="flex flex-col gap-1 mb-3">
+      <div class="inline-flex items-center gap-1.5 self-start px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-xs font-semibold shadow-sm">
+        <span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        <span>התאמה קולינרית חכמה בזמן אמת</span>
+      </div>
+      <h1 class="text-2xl font-bold text-on-surface tracking-tight mt-1">
+        התאמנו עבורכם 3 מנות שף מושלמות
+      </h1>
+      <div class="flex items-center gap-1.5 text-on-surface-variant text-sm">
+        <span class="material-symbols-outlined text-secondary text-[18px]">account_balance_wallet</span>
+        <span>במחיר שופרסל מדויק לתקציב של <strong class="text-on-surface font-bold">₪85</strong></span>
+      </div>
+    </div>
+
+    <!-- Chef Tip Card -->
+    <div class="p-3.5 rounded-2xl bg-surface-container-low shadow-sm flex items-center gap-3 relative overflow-hidden mb-4">
+      <div class="relative shrink-0">
+        <img alt="שף ירון ברנר" class="w-14 h-14 rounded-full object-cover shadow-sm ring-2 ring-primary/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeNnGVr49kquwTDa7317xCAC4jhnrJ92gfcAj1qKqfzC1GOn9mVJAdmbesjxz0Q7Mkg42GNm7Ni0lY-zrE15BM30d2XXpxb-xFTJ7Zotib2FYkmZDSZvaiWWTg459RW39GKwPqzPV4ce0uBOcQ1zd-INoReIRT_Cd5oFSFefRf-pNlcdCwgL6_7703cj_w10EQWLFLD0v1rkZgTutG_o2ZVV-clfxK05dZWNVEwdHT5vv-E_S8KdSNyw"/>
+        <span class="absolute -bottom-1 -left-1 w-5 h-5 bg-primary text-on-primary rounded-full flex items-center justify-center text-[11px] shadow-sm">
+          <span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">tips_and_updates</span>
+        </span>
+      </div>
+      <div class="flex flex-col min-w-0 pr-0.5">
+        <div class="flex items-center gap-1.5 mb-0.5">
+          <span class="text-xs text-primary font-bold">טיפ שף השבוע</span>
+          <span class="w-1 h-1 rounded-full bg-gray-400"></span>
+          <span class="text-xs text-on-surface-variant">שף ירון ברנר</span>
+        </div>
+        <p class="text-xs text-on-surface leading-tight">
+          “סלמון השבוע במבצע בשופרסל, ניצלנו את המחיר כדי לתת לכם מנת מסעדה בפחות מ-₪40 למנה!”
+        </p>
+      </div>
+    </div>
+
+    <!-- Filter chips -->
+    <div class="mb-4 overflow-x-auto no-scrollbar flex items-center gap-2">
+      <button onclick="filterRecipes('all', this)" class="filter-btn active flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gray-900 text-white text-xs font-semibold shrink-0">
+        <span class="material-symbols-outlined text-[15px]">stars</span>
+        <span>הכל</span>
+      </button>
+      <button onclick="filterRecipes('best', this)" class="filter-btn flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface text-xs font-semibold shadow-sm shrink-0">
+        <span class="material-symbols-outlined text-[15px] text-amber-500">grade</span>
+        <span>הכי משתלם</span>
+      </button>
+      <button onclick="filterRecipes('fast', this)" class="filter-btn flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface text-xs font-semibold shadow-sm shrink-0">
+        <span class="material-symbols-outlined text-[15px] text-amber-700">bolt</span>
+        <span>מהיר (עד 25 דק׳)</span>
+      </button>
+      <button onclick="filterRecipes('gourmet', this)" class="filter-btn flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface text-xs font-semibold shadow-sm shrink-0">
+        <span class="material-symbols-outlined text-[15px] text-primary">dinner_dining</span>
+        <span>יוקרתי</span>
+      </button>
+      <button onclick="filterRecipes('healthy', this)" class="filter-btn flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface text-xs font-semibold shadow-sm shrink-0">
+        <span class="material-symbols-outlined text-[15px] text-secondary">spa</span>
+        <span>בריא וקל</span>
+      </button>
+    </div>
+
+    <!-- Dish 1: Salmon -->
+    <article class="recipe-card mb-5 bg-surface-container-lowest rounded-3xl overflow-hidden shadow-sm border border-gray-100" data-cat="best healthy">
+      <div class="bg-primary text-on-primary px-4 py-1.5 flex items-center justify-between text-xs font-medium">
+        <span class="flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px]">workspace_premium</span>
+          המלצת השף הראשית
+        </span>
+        <span class="bg-white/20 text-white px-2 py-0.5 rounded-full text-[11px] font-bold">חיסכון מובטח</span>
+      </div>
+      <div class="relative w-full h-48 bg-gray-200">
+        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcvJxf0Pe9Xop_9HE_ACbuTQi-vOLz1P07PNlh9tExL2axIq3hotMNyFuzmNKIUcsf9moL9YEq7vS8fq814mpeW-Kpm34zqQGuqtfyFd4PdMwSeTMSskDgHp5xc2ylkAfSjXrgMR7bjtFWSPxRasA-qTSH5dsYQ8Zp4Yf3MphvjzGUNl5wH-rfSRf44lWGfInqRoXcffkQwEQWGuij8Mx9tY2ssF8UTlZc84MA_4ECzfTO6DpAaneDoQ" alt="פילה סלמון"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/10"></div>
+        <div class="absolute bottom-3 right-3 left-3 flex items-end justify-between text-white">
+          <div>
+            <span class="text-[11px] text-gray-200 font-medium">סה״כ בסל שופרסל</span>
+            <div class="flex items-baseline gap-1">
+              <span class="text-2xl font-bold">₪79.40</span>
+              <span class="text-gray-300 text-xs line-through">₪104</span>
+            </div>
+          </div>
+          <div class="px-2.5 py-1 rounded-xl bg-secondary-container text-on-secondary-container text-xs font-bold shadow-sm">
+            נותרו ₪5.60 מהתקציב!
+          </div>
+        </div>
+        <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md text-secondary text-xs font-bold">
+          ללא גלוטן
+        </span>
+        <button onclick="toggleFav(this)" class="absolute top-3 left-3 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-primary shadow-sm">
+          <span class="material-symbols-outlined text-[18px]">favorite_border</span>
+        </button>
+      </div>
+      <div class="p-4 flex flex-col gap-3">
+        <h2 class="font-bold text-base text-on-surface leading-snug">
+          פילה סלמון צרוב במחבת ברוטב חמאת לימון ושום על מצע שעועית ירוקה מוקפצת
+        </h2>
+        <div class="flex items-center gap-2 text-xs text-on-surface-variant">
+          <span class="px-2 py-1 rounded-lg bg-surface-container flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px] text-tertiary">schedule</span> 20 דקות
+          </span>
+          <span class="px-2 py-1 rounded-lg bg-surface-container flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px] text-primary">outdoor_grill</span> רמת שף: קל
+          </span>
+          <span class="px-2 py-1 rounded-lg bg-surface-container flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px] text-secondary">group</span> 2 מנות
+          </span>
+        </div>
+        <div class="p-2 rounded-xl bg-surface-container-low flex items-center justify-between text-xs text-on-surface-variant">
+          <span>4 מצרכים מסל הקניות • 2 תבלינים מהבית</span>
+          <span class="font-bold text-secondary">במקום ₪220 במסעדה</span>
+        </div>
+        <button onclick="openModal('salmon')" class="w-full h-11 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center gap-2 shadow-sm hover:opacity-95 active:scale-95 transition-all">
+          <span>למתכון והעברת מצרכים לסל</span>
+          <span class="material-symbols-outlined text-[18px]">cloud_upload</span>
+        </button>
+      </div>
+    </article>
+
+    <!-- Dish 2: Pappardelle -->
+    <article class="recipe-card mb-5 bg-surface-container-lowest rounded-3xl overflow-hidden shadow-sm border border-gray-100" data-cat="fast">
+      <div class="relative w-full h-44 bg-gray-200">
+        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnJdyuJ_eSRj-dQXKolexTgyXkP0GDpElOsME_u8M0zGIr0iL06PtT9Ww8oVD0cA8n2Mu40dh9DGIUo_o_m6ZHJ31msGKpxvbhXXrf8Jfby32vat9Bt5utdX41Z0pBvZiod9ZvP6p4kgjpXrGPwdVeAk_sIutEPntrYOJK0VoNg4PZ3ZiUfVNT4SJa3rT1QcsE5DD2q6RYAy0zba8ND4NoRCVbdHx65mqW2Sm84EwM0j4dmO5ZLwGiZg" alt="פפרדלה פטריות"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        <div class="absolute bottom-2.5 right-3 left-3 flex items-center justify-between text-white">
+          <div class="flex items-baseline gap-1">
+            <span class="text-2xl font-bold">₪54.20</span>
+            <span class="text-gray-300 text-xs">בסופר</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-lg bg-secondary-container text-on-secondary-container text-xs font-bold">
+            חיסכון של ₪30.80!
+          </span>
+        </div>
+        <span class="absolute top-2.5 right-3 px-2.5 py-1 rounded-full bg-white/90 text-secondary text-xs font-bold">צמחוני</span>
+        <button onclick="toggleFav(this)" class="absolute top-2.5 left-3 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-primary shadow-sm">
+          <span class="material-symbols-outlined text-[18px]">favorite_border</span>
+        </button>
+      </div>
+      <div class="p-4 flex flex-col gap-2.5">
+        <h2 class="font-bold text-base text-on-surface leading-snug">
+          פפרדלה ארטישוק, פטריות יער ופרמז׳ן בשמן זית ושום
+        </h2>
+        <div class="flex items-center gap-2 text-xs text-on-surface-variant">
+          <span class="px-2 py-1 rounded-lg bg-surface-container flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px] text-tertiary">schedule</span> 25 דקות
+          </span>
+          <span class="px-2 py-1 rounded-lg bg-surface-container flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px] text-primary">outdoor_grill</span> קל-בינוני
+          </span>
+          <span class="px-2 py-1 rounded-lg bg-surface-container flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px] text-secondary">group</span> 2 מנות
+          </span>
+        </div>
+        <div class="flex items-center gap-2 mt-1">
+          <button onclick="addToCart('פפרדלה ארטישוק ופטריות יער', 54.20)" class="flex-1 h-10 rounded-full bg-secondary-container text-on-secondary-container text-xs font-bold flex items-center justify-center gap-1.5 hover:opacity-90">
+            <span class="material-symbols-outlined text-[17px]">add_shopping_cart</span>
+            <span>הוסף מצרכים (4 פריטים)</span>
+          </button>
+          <button onclick="openModal('pappardelle')" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface">
+            <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Dish 3: Tofu Shawarma -->
+    <article class="recipe-card mb-5 bg-surface-container-lowest rounded-3xl overflow-hidden shadow-sm border border-gray-100" data-cat="healthy fast">
+      <div class="relative w-full h-44 bg-gray-200">
+        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwazI6BHSR4eiFr5kM49Rs6eSFaoDZrawpZKdUy9v9PabHN3GbjGIZ-53E60a8V-sfv35Vm5ojWdPe0OG5mi9ZluFzjWHcOl2GMvRS5Aji612_72PTX4bzr_uYk9IFZvzad5HRTepjbX1c_fz3gt6ZcPBdUwZY0oCjeH_XUwXl7k7FKMFJXCW9YEd5vnZXsOe15su3ROcJ6GyHMfBc-fUDFFGj5NNpHvpv897kj16bUDl9HvjA_wlCSg" alt="שווארמה טופו"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        <div class="absolute bottom-2.5 right-3 left-3 flex items-center justify-between text-white">
+          <div class="flex items-baseline gap-1">
+            <span class="text-2xl font-bold">₪48.90</span>
+            <span class="text-gray-300 text-xs">בסופר</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-lg bg-surface-container-lowest/90 text-on-surface text-xs font-bold">
+            סופר חסכוני
+          </span>
+        </div>
+        <span class="absolute top-2.5 right-3 px-2.5 py-1 rounded-full bg-white/90 text-secondary text-xs font-bold">
+          טבעוני עשיר בחלבון
+        </span>
+        <button onclick="toggleFav(this)" class="absolute top-2.5 left-3 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-primary shadow-sm">
+          <span class="material-symbols-outlined text-[18px]">favorite_border</span>
+        </button>
+      </div>
+      <div class="p-4 flex flex-col gap-2.5">
+        <h2 class="font-bold text-base text-on-surface leading-snug">
+          קערת שווארמה טופו פריכה, טחינה הר ברכה, סלט שוק צבעוני וקרעי פיתה
+        </h2>
+        <div class="flex items-center gap-2 text-xs text-on-surface-variant">
+          <span class="px-2 py-1 rounded-lg bg-surface-container flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px] text-tertiary">schedule</span> 18 דקות
+          </span>
+          <span class="px-2 py-1 rounded-lg bg-surface-container flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px] text-primary">outdoor_grill</span> רמת שף: קל
+          </span>
+          <span class="px-2 py-1 rounded-lg bg-surface-container flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px] text-secondary">fitness_center</span> 28 גרם חלבון
+          </span>
+        </div>
+        <div class="flex items-center gap-2 mt-1">
+          <button onclick="addToCart('קערת שווארמה טופו', 48.90)" class="flex-1 h-10 rounded-full bg-secondary-container text-on-secondary-container text-xs font-bold flex items-center justify-center gap-1.5 hover:opacity-90">
+            <span class="material-symbols-outlined text-[17px]">add_shopping_cart</span>
+            <span>הוסף מצרכים (4 פריטים)</span>
+          </button>
+          <button onclick="openModal('tofu')" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface">
+            <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+          </button>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <!-- TAB 2: Meal Builder -->
+  <main id="tab-builder" class="tab-content hidden flex-1 max-w-xl mx-auto w-full px-4 pt-4">
+    <div class="flex flex-col gap-4">
+      <div>
+        <span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold">בניית מנה מותאמת</span>
+        <h1 class="text-2xl font-bold mt-1">בנה את מנת השף שלך לפי תקציב ומזווה</h1>
+        <p class="text-sm text-on-surface-variant mt-0.5">השף מתאים עבורך מנה המנצלת מצרכים שיש לך בבית לחסכון מקסימלי בסופר.</p>
+      </div>
+
+      <!-- Budget control -->
+      <div class="p-4 rounded-2xl bg-surface-container-lowest shadow-sm border border-gray-100 flex flex-col gap-3">
+        <div class="flex justify-between items-center">
+          <span class="font-bold text-sm">תקציב יעד לסופרמרקט:</span>
+          <span id="budget-val" class="px-3 py-1 bg-primary text-white rounded-xl text-base font-bold">₪85</span>
+        </div>
+        <input type="range" min="40" max="200" value="85" step="5" oninput="updateBudget(this.value)" class="w-full accent-primary cursor-pointer"/>
+        <div class="flex justify-between text-xs text-gray-500">
+          <span>₪40 (קל)</span>
+          <span class="font-bold text-primary">₪85 (מומלץ)</span>
+          <span>₪200 (גורמה)</span>
+        </div>
+      </div>
+
+      <!-- Diners -->
+      <div class="p-4 rounded-2xl bg-surface-container-lowest shadow-sm border border-gray-100 flex flex-col gap-2">
+        <span class="font-bold text-sm">כמות סועדים:</span>
+        <div class="grid grid-cols-4 gap-2">
+          <button class="py-2 rounded-xl bg-surface-container text-xs font-bold active:bg-secondary active:text-white">1 סועד</button>
+          <button class="py-2 rounded-xl bg-secondary text-white text-xs font-bold">2 סועדים</button>
+          <button class="py-2 rounded-xl bg-surface-container text-xs font-bold active:bg-secondary active:text-white">4 סועדים</button>
+          <button class="py-2 rounded-xl bg-surface-container text-xs font-bold active:bg-secondary active:text-white">6+ סועדים</button>
+        </div>
+      </div>
+
+      <!-- Pantry staples -->
+      <div class="p-4 rounded-2xl bg-surface-container-lowest shadow-sm border border-gray-100 flex flex-col gap-2">
+        <span class="font-bold text-sm">מצרכים שכבר יש לי בבית (חוסך בסל!):</span>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1.5 rounded-xl bg-secondary-container text-on-secondary-container text-xs font-bold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">check</span> שמן זית
+          </span>
+          <span class="px-3 py-1.5 rounded-xl bg-secondary-container text-on-secondary-container text-xs font-bold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">check</span> מלח ים
+          </span>
+          <span class="px-3 py-1.5 rounded-xl bg-secondary-container text-on-secondary-container text-xs font-bold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">check</span> שום טרי
+          </span>
+          <span class="px-3 py-1.5 rounded-xl bg-secondary-container text-on-secondary-container text-xs font-bold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">check</span> פלפל שחור
+          </span>
+          <span class="px-3 py-1.5 rounded-xl bg-surface-container text-on-surface text-xs font-medium cursor-pointer">חמאה</span>
+          <span class="px-3 py-1.5 rounded-xl bg-surface-container text-on-surface text-xs font-medium cursor-pointer">סויה</span>
+          <span class="px-3 py-1.5 rounded-xl bg-surface-container text-on-surface text-xs font-medium cursor-pointer">טחינה גולמית</span>
+        </div>
+      </div>
+
+      <button onclick="switchTab('recommendations')" class="w-full h-12 rounded-full bg-primary text-white font-bold text-sm shadow-md hover:opacity-95">
+        הצג מנות מותאמות לתקציב ₪85
+      </button>
+    </div>
+  </main>
+
+  <!-- TAB 3: Grocery Cart -->
+  <main id="tab-cart" class="tab-content hidden flex-1 max-w-xl mx-auto w-full px-4 pt-4">
+    <div class="flex flex-col gap-4">
+      <div>
+        <h1 class="text-2xl font-bold">סל מצרכים והשוואת סופרמרקטים</h1>
+        <p class="text-sm text-on-surface-variant">מחירים מחושבים בלייב בהשוואה בין רשתות המזון.</p>
+      </div>
+
+      <!-- Supermarket comparison -->
+      <div class="grid grid-cols-3 gap-2">
+        <div class="p-2.5 rounded-xl bg-secondary text-white text-center flex flex-col gap-0.5">
+          <span class="text-xs font-bold">שופרסל</span>
+          <span id="cart-total-shufersal" class="text-base font-bold">₪79.40</span>
+          <span class="text-[10px] text-green-200">סניף זמין</span>
+        </div>
+        <div class="p-2.5 rounded-xl bg-surface-container-lowest text-center flex flex-col gap-0.5 border border-gray-200">
+          <span class="text-xs font-bold">רמי לוי</span>
+          <span id="cart-total-rami" class="text-base font-bold">₪76.20</span>
+          <span class="text-[10px] text-gray-500">סניף זמין</span>
+        </div>
+        <div class="p-2.5 rounded-xl bg-surface-container-lowest text-center flex flex-col gap-0.5 border border-gray-200">
+          <span class="text-xs font-bold">קרפור</span>
+          <span id="cart-total-carrefour" class="text-base font-bold">₪81.00</span>
+          <span class="text-[10px] text-gray-500">סניף זמין</span>
+        </div>
+      </div>
+
+      <!-- Cart Items -->
+      <div id="cart-list" class="flex flex-col gap-2">
+        <div class="p-3 rounded-2xl bg-surface-container-lowest shadow-sm flex items-center justify-between border border-gray-100">
+          <div class="flex items-center gap-2.5">
+            <input type="checkbox" checked class="accent-secondary w-4 h-4 rounded"/>
+            <div class="flex flex-col">
+              <span class="text-sm font-semibold">פילה סלמון טרי נקי</span>
+              <span class="text-xs text-gray-500">400 גרם • מחלקת דגים ובשר</span>
+            </div>
+          </div>
+          <span class="font-bold text-sm text-secondary">₪49.90</span>
+        </div>
+
+        <div class="p-3 rounded-2xl bg-surface-container-lowest shadow-sm flex items-center justify-between border border-gray-100">
+          <div class="flex items-center gap-2.5">
+            <input type="checkbox" checked class="accent-secondary w-4 h-4 rounded"/>
+            <div class="flex flex-col">
+              <span class="text-sm font-semibold">שעועית ירוקה עדינה קפואה</span>
+              <span class="text-xs text-gray-500">400 גרם • מחלקת קפואים</span>
+            </div>
+          </div>
+          <span class="font-bold text-sm text-secondary">₪12.90</span>
+        </div>
+
+        <div class="p-3 rounded-2xl bg-surface-container-lowest shadow-sm flex items-center justify-between border border-gray-100">
+          <div class="flex items-center gap-2.5">
+            <input type="checkbox" checked class="accent-secondary w-4 h-4 rounded"/>
+            <div class="flex flex-col">
+              <span class="text-sm font-semibold">חמאה הולנדית</span>
+              <span class="text-xs text-gray-500">100 גרם • מחלקת מוצרי חלב</span>
+            </div>
+          </div>
+          <span class="font-bold text-sm text-secondary">₪8.90</span>
+        </div>
+
+        <div class="p-3 rounded-2xl bg-surface-container-lowest shadow-sm flex items-center justify-between border border-gray-100">
+          <div class="flex items-center gap-2.5">
+            <input type="checkbox" checked class="accent-secondary w-4 h-4 rounded"/>
+            <div class="flex flex-col">
+              <span class="text-sm font-semibold">לימון טרי ושמיר</span>
+              <span class="text-xs text-gray-500">צרור + 1 יח' • ירקות</span>
+            </div>
+          </div>
+          <span class="font-bold text-sm text-secondary">₪7.70</span>
+        </div>
+      </div>
+
+      <button onclick="alert('סל הקניות הועבר לחשבון שופרסל Online בהצלחה!')" class="w-full h-12 rounded-full bg-primary text-white font-bold text-sm shadow-md hover:opacity-95 flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">shopping_cart_checkout</span>
+        <span>בצע הזמנה בשופרסל Online (₪79.40)</span>
+      </button>
+    </div>
+  </main>
+
+  <!-- TAB 4: Profile & Booking -->
+  <main id="tab-profile" class="tab-content hidden flex-1 max-w-xl mx-auto w-full px-4 pt-4">
+    <div class="flex flex-col gap-4">
+      <!-- Chef card -->
+      <div class="p-4 rounded-3xl bg-surface-container-lowest shadow-sm border border-gray-100 flex flex-col gap-3">
+        <div class="flex items-center gap-3">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeNnGVr49kquwTDa7317xCAC4jhnrJ92gfcAj1qKqfzC1GOn9mVJAdmbesjxz0Q7Mkg42GNm7Ni0lY-zrE15BM30d2XXpxb-xFTJ7Zotib2FYkmZDSZvaiWWTg459RW39GKwPqzPV4ce0uBOcQ1zd-INoReIRT_Cd5oFSFefRf-pNlcdCwgL6_7703cj_w10EQWLFLD0v1rkZgTutG_o2ZVV-clfxK05dZWNVEwdHT5vv-E_S8KdSNyw" class="w-16 h-16 rounded-full object-cover ring-2 ring-primary"/>
+          <div class="flex flex-col">
+            <div class="flex items-center gap-1">
+              <span class="font-bold text-lg">שף ירון ברנר</span>
+              <span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+            </div>
+            <span class="text-xs text-primary font-semibold">שף פרטי ויועץ קולינרי אישי</span>
+            <!-- Live Availability badge -->
+            <span class="inline-flex items-center gap-1 mt-1 text-[11px] font-bold text-secondary bg-secondary-container px-2.5 py-0.5 rounded-full self-start">
+              <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+              שף פרטי זמין להזמנות השבוע!
+            </span>
+          </div>
+        </div>
+        <p class="text-xs text-on-surface-variant leading-relaxed">
+          מתמחה במטבח ים-תיכוני עילי ובהתאמת מנות גורמה לתקציב סופרמרקט ביתי. מגיע עד הבית לבישול ארוחות פרטיות ואירועים.
+        </p>
+
+        <!-- Booking button -->
+        <button onclick="openBooking()" class="w-full h-11 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm">
+          <span class="material-symbols-outlined text-[17px]">event_available</span>
+          <span>בדוק זמינות ותאם שף לביתך</span>
+        </button>
+      </div>
+
+      <!-- Savings stats -->
+      <div class="p-4 rounded-2xl bg-secondary-container text-on-secondary-container flex items-center justify-between">
+        <div>
+          <span class="text-xs">חיסכון מצטבר מבישול ביתי החודש:</span>
+          <div class="text-2xl font-bold">₪486.20</div>
+          <span class="text-[11px] opacity-80">בהשוואה למסעדות שף מקבילות</span>
+        </div>
+        <span class="material-symbols-outlined text-3xl">savings</span>
+      </div>
+
+      <!-- Android APK banner -->
+      <div class="p-4 rounded-2xl bg-surface-container-low border border-primary/20 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-primary text-3xl">android</span>
+          <div class="flex flex-col">
+            <span class="font-bold text-sm">אפליקציית Android (APK)</span>
+            <span class="text-xs text-gray-500">הורד והתקן ישירות במכשיר הנייד</span>
+          </div>
+        </div>
+        <a href="/download-apk" class="px-4 py-2 rounded-full bg-primary text-white text-xs font-bold hover:opacity-90">הורד עכשיו</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Recipe Detail Modal -->
+  <div id="recipe-modal" class="fixed inset-0 z-50 bg-black/60 hidden items-end sm:items-center justify-center p-0 sm:p-4 backdrop-blur-sm">
+    <div class="bg-white w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl p-5 flex flex-col gap-4 text-right">
+      <div class="flex justify-between items-center border-b pb-3">
+        <h3 id="modal-title" class="font-bold text-lg">פילה סלמון צרוב בחמאת לימון</h3>
+        <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">✕</button>
+      </div>
+      <div class="flex items-center justify-between text-xs text-gray-600">
+        <span>⏱ 20 דקות</span>
+        <span>🍳 קל</span>
+        <span>👥 2 סועדים</span>
+        <span class="font-bold text-secondary">₪79.40 בסופר</span>
+      </div>
+      <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900">
+        <strong>💡 סוד השף:</strong> סלמון יבש בנייר סופג הוא המפתח לעור סופר קריספי. צרבו 80% מהזמן על צד העור!
+      </div>
+      <div>
+        <h4 class="font-bold text-sm mb-2">שלבי הכנה:</h4>
+        <ol class="list-decimal list-inside text-xs space-y-2 text-gray-700">
+          <li><strong>ייבוש ותיבול:</strong> מייבשים את הסלמון, חורצים קלות את העור ומתבלים במלח ים.</li>
+          <li><strong>צריבת העור (4 דק'):</strong> צורבים על מחבת לוהטת עם העור למטה עד פריכות מושלמת.</li>
+          <li><strong>השקיית חמאה (2 דק'):</strong> הופכים, מוסיפים חמאה, שום, מיץ לימון ושמיר ומשקים בכף.</li>
+          <li><strong>הקפצת שעועית (3 דק'):</strong> מקפיצים שעועית ירוקה עם שמן זית, מלח וקליפת לימון.</li>
+        </ol>
+      </div>
+      <button onclick="addToCart('פילה סלמון צרוב בחמאת לימון', 79.40); closeModal();" class="w-full h-11 rounded-full bg-primary text-white text-sm font-bold shadow-md">
+        העבר את כל המצרכים לסל הקניות (₪79.40)
+      </button>
+    </div>
+  </div>
+
+  <!-- Booking Modal -->
+  <div id="booking-modal" class="fixed inset-0 z-50 bg-black/60 hidden items-end sm:items-center justify-center p-0 sm:p-4 backdrop-blur-sm">
+    <div class="bg-white w-full max-w-lg rounded-t-3xl sm:rounded-3xl p-5 flex flex-col gap-4 text-right">
+      <div class="flex justify-between items-center border-b pb-3">
+        <h3 class="font-bold text-lg">בדיקת זמינות שף פרטי לאירוח</h3>
+        <button onclick="closeBooking()" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">✕</button>
+      </div>
+      <p class="text-xs text-gray-600">שף ירון ברנר מגיע עם כל חומרי הגלם הטריים להכין ארוחת שף אצלכם בבית.</p>
+      <div class="flex flex-col gap-2">
+        <label class="text-xs font-bold">מועד מבוקש:</label>
+        <select class="p-2 border rounded-xl text-xs bg-gray-50">
+          <option>יום חמישי הקרוב (ערב) - זמין</option>
+          <option>יום שישי הקרוב (צהריים/ערב) - זמין</option>
+          <option>מוצאי שבת - זמין</option>
+          <option>תאריך מותאם אישית</option>
+        </select>
+      </div>
+      <div class="flex flex-col gap-2">
+        <label class="text-xs font-bold">כמות סועדים:</label>
+        <select class="p-2 border rounded-xl text-xs bg-gray-50">
+          <option>ארוחה זוגית רומנטית (2 סועדים)</option>
+          <option>משפחתית (4-6 סועדים)</option>
+          <option>אירוח חברים (8-12 סועדים)</option>
+        </select>
+      </div>
+      <button onclick="alert('פנייתך לשף ירון נשלחה בהצלחה! השף יחזור אליך תוך מספר דקות לאישור התפריט.'); closeBooking();" class="w-full h-11 rounded-full bg-primary text-white text-sm font-bold shadow-md">
+        שלח בדיקת זמינות ותיאום תפריט
+      </button>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <nav class="fixed bottom-0 w-full z-40 bg-surface/95 backdrop-blur-xl border-t border-surface-container">
+    <div class="max-w-xl mx-auto flex justify-around items-center h-16 px-2">
+      <button onclick="switchTab('builder')" id="nav-builder" class="nav-btn flex flex-col items-center gap-1 text-on-surface-variant">
+        <span class="material-symbols-outlined text-[22px]">skillet</span>
+        <span class="text-[11px] font-medium">בניית מנה</span>
+      </button>
+      <button onclick="switchTab('recommendations')" id="nav-recommendations" class="nav-btn active flex flex-col items-center gap-1 text-primary font-bold">
+        <span class="material-symbols-outlined text-[22px]">local_dining</span>
+        <span class="text-[11px]">הצעות שף</span>
+      </button>
+      <button onclick="switchTab('cart')" id="nav-cart" class="nav-btn flex flex-col items-center gap-1 text-on-surface-variant relative">
+        <span class="material-symbols-outlined text-[22px]">shopping_bag</span>
+        <span class="text-[11px] font-medium">סל קניות</span>
+        <span id="cart-badge" class="absolute -top-1 right-2 bg-primary text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">4</span>
+      </button>
+      <button onclick="switchTab('profile')" id="nav-profile" class="nav-btn flex flex-col items-center gap-1 text-on-surface-variant">
+        <span class="material-symbols-outlined text-[22px]">bookmark_border</span>
+        <span class="text-[11px] font-medium">פרופיל ושמורים</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('text-primary', 'font-bold');
+        btn.classList.add('text-on-surface-variant');
+      });
+      const activeBtn = document.getElementById('nav-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.add('text-primary', 'font-bold');
+        activeBtn.classList.remove('text-on-surface-variant');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function filterRecipes(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.remove('bg-gray-900', 'text-white');
+        b.classList.add('bg-surface-container-lowest', 'text-on-surface');
+      });
+      btn.classList.add('bg-gray-900', 'text-white');
+      btn.classList.remove('bg-surface-container-lowest', 'text-on-surface');
+
+      document.querySelectorAll('.recipe-card').forEach(card => {
+        if (cat === 'all' || card.dataset.cat.includes(cat)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    function toggleFav(btn) {
+      const icon = btn.querySelector('.material-symbols-outlined');
+      if (icon.textContent === 'favorite_border') {
+        icon.textContent = 'favorite';
+        icon.style.fontVariationSettings = "'FILL' 1";
+      } else {
+        icon.textContent = 'favorite_border';
+        icon.style.fontVariationSettings = "'FILL' 0";
+      }
+    }
+
+    function updateBudget(val) {
+      document.getElementById('budget-val').textContent = '₪' + val;
+    }
+
+    function openModal(id) {
+      const modal = document.getElementById('recipe-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('recipe-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function openBooking() {
+      const modal = document.getElementById('booking-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeBooking() {
+      const modal = document.getElementById('booking-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    let cartCount = 4;
+    function addToCart(title, price) {
+      cartCount++;
+      document.getElementById('cart-badge').textContent = cartCount;
+      alert(`מצרכי "${title}" (₪${price}) נוספו לסל בהצלחה!`);
+    }
+  </script>
+</body>
+</html>
